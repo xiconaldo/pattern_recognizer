@@ -3,6 +3,7 @@
 
 #include "tree.h"
 #include <forward_list>
+#include <vector>
 
 class TreeList : public Tree{
 
@@ -22,7 +23,11 @@ public:
 	uint child_count() const;
 
     TreeList();
-    TreeList(const Symbol& symbol);
+	TreeList(const Symbol& symbol);
+	
+	void saveToDisk(std::ostream& output);
+	void loadFromDisk(std::istream& input);
+	void print();
 
 private:
 	Symbol symbol_;

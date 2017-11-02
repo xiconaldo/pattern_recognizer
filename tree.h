@@ -3,6 +3,7 @@
 
 #include "definitions.h"
 #include <unordered_set>
+#include <iostream>
 
 class Tree{
 
@@ -20,6 +21,10 @@ public:
 	virtual uint ocurrences() const = 0;
 	virtual uint contexts() const = 0;
 	virtual uint child_count() const = 0;
+
+	virtual void saveToDisk(std::ostream& output) = 0;
+	virtual void loadFromDisk(std::istream& input) = 0;
+	virtual void print() = 0;
 };
 
 #endif // TREE_H

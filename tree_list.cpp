@@ -143,3 +143,75 @@ TreeList* TreeList::findChild(const Symbol& symbol){
 
 	return nullptr;
 }
+
+void TreeList::saveToDisk(std::ostream& output){
+	
+	output.write( (char*)&symbol_, sizeof(symbol_) );
+	output.write( (char*)&num_ocurrences_, sizeof(num_ocurrences_) );
+	output.write( (char*)&contexts_count_, sizeof(contexts_count_) );
+
+	for( auto element : children)
+		element->saveToDisk(output);
+
+}
+
+void TreeList::loadFromDisk(std::istream& input){
+	
+	input.read( (char*)&symbol_, sizeof(symbol_) );
+	input.read( (char*)&num_ocurrences_, sizeof(num_ocurrences_) );
+	input.read( (char*)&contexts_count_, sizeof(contexts_count_) );
+	uint num_contexts = contexts_count_;
+
+	auto it = children.before_begin();
+
+	while(num_contexts > 0){
+		size++;
+		it = children.insert_after(it, new TreeList);
+		(*it)->loadFromDisk(input);
+		num_contexts -= (*it)->num_ocurrences_;
+	}
+
+}
+
+void TreeList::print(){
+	static int depth = -1;
+	static std::vector<int> path;
+
+	depth++;
+
+	for(int i = 0; i < depth; i++){
+		if(i == depth-1)
+			std::cout << "+--";
+		else if( path[i] == 0)
+			std::cout << "|  ";
+		else
+			std::cout << "   ";
+	}
+
+	std::cout << "{" << symbol_ << ", " << num_ocurrences_ << ", " << contexts_count_ << "}\n";
+
+	for(int i = 0; i < depth; i++){
+		if( path[i] == 0)
+			std::cout << "|  ";
+		else
+			std::cout << "   ";
+	}
+
+	if(!this->children.empty())
+		std::cout << "|  ";
+
+	std::cout << std::endl;
+
+	auto it = children.before_begin();
+	for(int i = 0; i < size; i++){
+		it++;
+		if(i == size-1)
+			path.push_back(1);
+		else
+			path.push_back(0);
+		(*it)->print();
+		path.pop_back();
+	}
+
+	depth--;
+}

@@ -3,6 +3,7 @@
 
 #include "tree.h"
 #include <map>
+#include <vector>
 
 class CompareSymbol{
 public:
@@ -25,6 +26,10 @@ public:
 	uint ocurrences() const;
 	uint contexts() const;
 	uint child_count() const;
+
+	void saveToDisk(std::ostream& output);
+	void loadFromDisk(std::istream& input);
+	void print();
 
 private:
 	uint num_ocurrences_ = 0;

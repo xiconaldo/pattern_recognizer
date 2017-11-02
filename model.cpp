@@ -265,3 +265,33 @@ uint Model::getContextSize(){
 uchar Model::getK() const{
     return k;
 }
+
+
+void Model::saveToDisk(std::ostream& output){
+
+    output.write( (char*)&k, sizeof(k) );
+    tree->saveToDisk(output);
+
+}
+
+void Model::loadFromDisk(std::istream& input){
+
+    input.read( (char*)&k, sizeof(k) );
+
+    delete tree;
+    if( k < 8)
+        tree = new TreeMap;
+    else
+        tree = new TreeList;
+    
+    tree->loadFromDisk(input);
+
+    for( Symbol s = 0; s < ESC; s++)
+        if(tree->findPath(s))
+            context_minus_1.erase(s);
+
+}
+
+void Model::printTree(){
+    tree->print();
+}

@@ -30,6 +30,10 @@ public:
     uint getContextSize(const Context& context);
     uint getContextSize();
     uchar getK() const;
+
+    void saveToDisk(std::ostream& output);
+    void loadFromDisk(std::istream& output);
+    void printTree();
 };
 
 #endif // MODEL_H

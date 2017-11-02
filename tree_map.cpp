@@ -121,3 +121,86 @@ TreeMap* TreeMap::addChild(const Symbol& symbol){
 TreeMap* TreeMap::findChild(const Symbol& symbol){
 	return children.count(symbol) ? children[symbol] : nullptr;
 }
+
+
+void TreeMap::saveToDisk(std::ostream& output){
+
+	output.write( (char*)&num_ocurrences_, sizeof(num_ocurrences_) );
+	output.write( (char*)&contexts_count_, sizeof(contexts_count_) );
+
+	for( auto element : children){
+		output.write( (char*)&element.first, sizeof(element.first) );
+		element.second->saveToDisk(output);
+	}
+
+}
+
+void TreeMap::loadFromDisk(std::istream& input){
+	
+	Symbol next;
+
+	input.read( (char*)&num_ocurrences_, sizeof(num_ocurrences_) );
+	input.read( (char*)&contexts_count_, sizeof(contexts_count_) );
+	uint num_contexts = contexts_count_;
+
+	while(num_contexts > 0){
+		input.read( (char*)&next, sizeof(next) );
+		this->addChild(next);
+		children[next]->loadFromDisk(input);
+		num_contexts -= children[next]->num_ocurrences_;
+	}
+
+}
+
+void TreeMap::print(){
+
+	static int depth = -1;
+	static std::vector<int> path;
+	static Symbol symbol_ = 0;
+
+	depth++;
+
+	for(int i = 0; i < depth; i++){
+		if(i == depth-1)
+			std::cout << "+--";
+		else if( path[i] == 0)
+			std::cout << "|  ";
+		else
+			std::cout << "   ";
+	}
+
+	std::cout << "{" << symbol_ << ", " << num_ocurrences_ << ", " << contexts_count_ << "}\n";
+
+	for(int i = 0; i < depth; i++){
+		if( path[i] == 0)
+			std::cout << "|  ";
+		else
+			std::cout << "   ";
+	}
+
+	if(!this->children.empty())
+		std::cout << "|  ";
+
+	std::cout << std::endl;
+
+
+	int i = 0;
+	Symbol aux;
+
+	for( auto ch : children){
+
+		if(i++ == children.size()-1)
+			path.push_back(1);
+		else
+			path.push_back(0);
+
+		aux = symbol_;
+		symbol_ = ch.first;
+		ch.second->print();
+		symbol_ = aux;
+		path.pop_back();
+
+	}
+
+	depth--;
+}

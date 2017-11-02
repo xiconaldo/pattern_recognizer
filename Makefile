@@ -5,13 +5,13 @@ SRC = $(wildcard *.cpp)
 OBJ = $(SRC:.cpp=.o)
 
 compressor: $(OBJ)
-	$(CXX) $(CXXFLAGS) $^ -o compressor
+	$(CXX) $(CXXFLAGS) $^ -o recognizer
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) $^ -c -o $@
 
 debug:
-	$(CXX) $(CXXFLAGSDEBUG) *.cpp -o compressor
+	$(CXX) $(CXXFLAGSDEBUG) *.cpp -o recognizer
 
 clean:
-	rm -f *.o compressor
+	rm -f *.o recognizer
