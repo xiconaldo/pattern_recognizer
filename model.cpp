@@ -18,7 +18,11 @@ Model::Model(uchar k, uint tree_mode){
 }
 
 Model::~Model(){
-    delete tree;
+    if(tree){
+        tree->clear();
+        delete tree;
+        tree = nullptr;
+    }
 }
 
 void Model::updateModel(const Context& context, const Symbol& symbol){
@@ -278,7 +282,12 @@ void Model::loadFromDisk(std::istream& input){
 
     input.read( (char*)&k, sizeof(k) );
 
-    delete tree;
+    if(tree){
+        tree->clear();
+        delete tree;
+        tree = nullptr;
+    }
+
     if( k < 8)
         tree = new TreeMap;
     else

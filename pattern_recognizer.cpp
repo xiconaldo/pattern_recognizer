@@ -30,5 +30,14 @@ void PatternRecognizer::saveToDisk(std::ostream& output){
 
 uint PatternRecognizer::getScore(SymbolBuffer& input){
 
+    double entropy;
+    EmptyBitBuffer output{};
+    ArithmeticCompressor::encode(model, input, output, entropy, false);
 
+    return output.size();
+
+}
+
+Model& PatternRecognizer::getModel(){
+    return model;
 }

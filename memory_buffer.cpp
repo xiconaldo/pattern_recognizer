@@ -36,7 +36,7 @@ uint MemorySymbolBuffer::size(){
     return source.size() * 8U;
 }
 
-void MemorySymbolBuffer::print(){
+void MemorySymbolBuffer::print() const{
     for( uchar c : source)
         std::cout << (char)c;
 }
@@ -166,7 +166,7 @@ uint MemoryBitBuffer::size(){
     return bit_counter;
 }
 
-void MemoryBitBuffer::print(){
+void MemoryBitBuffer::print() const{
 
     if(!source.size()) return;
 

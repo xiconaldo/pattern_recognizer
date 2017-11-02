@@ -11,7 +11,7 @@ public:
     virtual bool eof() = 0;
     virtual void reset() = 0;
     virtual uint size() = 0;
-    virtual void print() = 0;
+    virtual void print() const = 0;
 };
 
 class BitBuffer{
@@ -26,7 +26,7 @@ class BitBuffer{
         virtual bool eof() = 0;
         virtual void reset() = 0;
         virtual uint size() = 0;
-        virtual void print() = 0;
+        virtual void print() const = 0;
 };
 
 #endif // BUFFER_H

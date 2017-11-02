@@ -1,21 +1,17 @@
-#ifndef FILE_BUFFER_H
-#define FILE_BUFFER_H
+#ifndef EMPTY_BUFFER_H
+#define EMPTY_BUFFER_H
 
 #include "buffer.h"
-#include <fstream>
 #include <iostream>
-#include <ios>
 
-class FileSymbolBuffer : public SymbolBuffer{
+class EmptySymbolBuffer : public SymbolBuffer{
     
 private:
-    std::fstream source;
-    uint seek_g;
-    uint seek_p;
+    uint symbol_counter;
 
 public:
-    FileSymbolBuffer(const std::string& file_name);
-    ~FileSymbolBuffer();
+    EmptySymbolBuffer();
+    EmptySymbolBuffer(const std::string& symbols);
     void operator>>(Symbol& symbol);
     void operator<<(const Symbol symbol);
     bool eof();
@@ -24,21 +20,14 @@ public:
     void print() const;
 };
 
-class FileBitBuffer : public BitBuffer{
+class EmptyBitBuffer : public BitBuffer{
     
 private:
-    std::fstream source;
-    uchar wr_buffer;
-    uchar rd_buffer;
-    uchar wr_mask;
-    uchar rd_mask;
     uint bit_counter;
-    uint seek_g;
-    uint seek_p;
 
 public:
-    FileBitBuffer(const std::string& file_name);
-    ~FileBitBuffer();
+    EmptyBitBuffer();
+    EmptyBitBuffer(const std::string& bits);
     void operator>>(Bit& bit);
     void operator<<(const Bit bit);
     void writeBlock( uchar byte );
@@ -51,4 +40,4 @@ public:
     void print() const;
 };
 
-#endif // FILE_BUFFER_H
+#endif // EMPTY_BUFFER_H

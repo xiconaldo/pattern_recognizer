@@ -17,12 +17,13 @@ private:
    Model model;
 
 public:
-    PatternRecognizer(uchar k, uint tree_mode = 0U);
+    PatternRecognizer(uchar k = 2, uint tree_mode = 0U);
     ~PatternRecognizer();
     void updatePattern(SymbolBuffer& input);
     void loadFromDisk(std::istream& input);
     void saveToDisk(std::ostream& output);
     uint getScore(SymbolBuffer& input);
+    Model& getModel();
 };
 
 #endif // PATTERN_RECOGNIZER_H 

@@ -40,15 +40,17 @@ bool FileSymbolBuffer::eof(){
 }
 
 void FileSymbolBuffer::reset(){
-    source.seekg(0, source.beg);
-    source.seekp(0, source.beg);
+    source.seekg (0, source.end);
+    seek_p = source.tellg();
+    source.seekg (0, source.beg);
+    seek_g = source.tellg();
 }
 
 uint FileSymbolBuffer::size(){
     return (seek_p-seek_g)* 8U;
 }
 
-void FileSymbolBuffer::print(){
+void FileSymbolBuffer::print() const{
     std::cout << source.rdbuf();
 }
 
@@ -181,6 +183,6 @@ uint FileBitBuffer::size(){
     return (seek_p-seek_g)*8U;
 }
 
-void FileBitBuffer::print(){
+void FileBitBuffer::print() const{
     std::cout << source.rdbuf();
 }

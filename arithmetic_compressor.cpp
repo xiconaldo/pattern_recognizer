@@ -1,10 +1,6 @@
 #include "arithmetic_compressor.h"
 
-ArithmeticCompressor::ArithmeticCompressor(uchar k, uint tree_mode) :
-	model{k, tree_mode}
-{}
-
-void ArithmeticCompressor::encode(SymbolBuffer& input, BitBuffer& output, double& entropy, bool clear_model){
+void ArithmeticCompressor::encode(Model& model, SymbolBuffer& input, BitBuffer& output, double& entropy, bool update){
 
 	uint low = 0x00000000U;
 	uint high = 0x7FFFFFFFU;
@@ -74,7 +70,7 @@ void ArithmeticCompressor::encode(SymbolBuffer& input, BitBuffer& output, double
 					  << std::fixed << std::setw(7) << std::setprecision(2)
 					  << percent * 100.0f / total_percent << " %";
 
-		model.updateModel(context, symbol);
+		if(update) model.updateModel(context, symbol);
 		context.push_back(symbol);
 		if(context.size() > model.getK()) context.pop_front();
 
@@ -90,10 +86,9 @@ void ArithmeticCompressor::encode(SymbolBuffer& input, BitBuffer& output, double
 	}
 
 	entropy /= total_percent;
-	if(clear_model) model.clearModel();
 }
 
-void ArithmeticCompressor::decode(BitBuffer& input, SymbolBuffer& output, uint size, bool clear_model){
+void ArithmeticCompressor::decode(Model& model, BitBuffer& input, SymbolBuffer& output, uint size, bool update){
 
 	uint low = 0x00000000U;
 	uint high = 0x7FFFFFFFU;
@@ -214,10 +209,9 @@ void ArithmeticCompressor::decode(BitBuffer& input, SymbolBuffer& output, uint s
 					  << percent * 100.0f / total_percent << " %";
 
 		if(--size == 0) break;
-		model.updateModel(context, symbol);
+		if(update) model.updateModel(context, symbol);
 		context.push_back(symbol);
 		if(context.size() > model.getK()) context.pop_front();
 	}
 
-	if(clear_model) model.clearModel();
 }

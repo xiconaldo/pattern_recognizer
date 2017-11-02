@@ -35,5 +35,6 @@
 *.json
 *.txt
 *.xdg
+*.pat
 compressor
 recognizer
