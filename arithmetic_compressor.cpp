@@ -64,11 +64,11 @@ void ArithmeticCompressor::encode(Model& model, SymbolBuffer& input, BitBuffer& 
 			}
 		}
 
-		if(++percent % 10000U == 0 || percent == total_percent)
-			std::cerr << "\rCompressing " << std::setw(percent*59/total_percent) << std::setfill('|') << ""
-					  << std::setw(59-percent*59/total_percent) << std::setfill(' ') << ""
-					  << std::fixed << std::setw(7) << std::setprecision(2)
-					  << percent * 100.0f / total_percent << " %";
+		// if(++percent % 10000U == 0 || percent == total_percent)
+		// 	std::cerr << "\rCompressing " << std::setw(percent*59/total_percent) << std::setfill('|') << ""
+		// 			  << std::setw(59-percent*59/total_percent) << std::setfill(' ') << ""
+		// 			  << std::fixed << std::setw(7) << std::setprecision(2)
+		// 			  << percent * 100.0f / total_percent << " %";
 
 		if(update) model.updateModel(context, symbol);
 		context.push_back(symbol);
@@ -202,11 +202,11 @@ void ArithmeticCompressor::decode(Model& model, BitBuffer& input, SymbolBuffer& 
 
 		output << symbol;
 
-		if(++percent % 10000U == 0 || percent == total_percent)
-			std::cerr << "\rDecompressing " << std::setw(percent*57/total_percent) << std::setfill('|') << ""
-					  << std::setw(57-percent*57/total_percent) << std::setfill(' ') << ""
-					  << std::fixed << std::setw(7) << std::setprecision(2)
-					  << percent * 100.0f / total_percent << " %";
+		// if(++percent % 10000U == 0 || percent == total_percent)
+		// 	std::cerr << "\rDecompressing " << std::setw(percent*57/total_percent) << std::setfill('|') << ""
+		// 			  << std::setw(57-percent*57/total_percent) << std::setfill(' ') << ""
+		// 			  << std::fixed << std::setw(7) << std::setprecision(2)
+		// 			  << percent * 100.0f / total_percent << " %";
 
 		if(--size == 0) break;
 		if(update) model.updateModel(context, symbol);
