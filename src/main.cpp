@@ -44,7 +44,7 @@ int main(int argc, char* argv[]){
 
 		std::string test_file_name = std::string{argv[argc-1]};
 		std::vector<std::string> input_file_names;
-		std::vector<uint> scores;
+		std::vector<double> scores;
 
 		for(int i = 2; i < argc-1; i++)
 			input_file_names.push_back(std::string{argv[i]});	
@@ -54,40 +54,47 @@ int main(int argc, char* argv[]){
 		scores = selector.getScores();
 
 		uint best_choice = 0;
-		uint best_score = -1;
+		double best_score = 0.0;
 		uint i = 0;
 
 		for(auto score : scores){
-			best_score = score < best_score ? score : best_score;
+			best_score = score > best_score ? score : best_score;
 			best_choice = score == best_score ? i : best_choice;
 			i++;
 		}		
 
-		uint alig1 = 30;
-		uint alig2 = 17;
+		uint alig1 = 25;
+		uint alig2 = 9;
+		uint alig3 = 7;
 
 		std::cout << "\n\nComparation Finished!\nResults:\n\n";
 
 		std::cout << std::setw(alig1) << std::left << std::setfill('-') << "+"
 				  << std::setw(alig2) << std::left << std::setfill('-') << "+"
+				  << std::setw(alig3) << std::left << std::setfill('-') << "+"
 				  << "+" << std::endl << std::setfill(' ');
 
 		std::cout << std::setw(alig1) << std::left << "| Pattern File" 
-				  << std::setw(alig2) << std::left << "| Compress Size" << "|" << std::endl;
+				  << std::setw(alig2) << std::left << "| RC"
+				  << std::setw(alig3) << std::left << "| Best" << "|" << std::endl;
 
 		std::cout << std::setw(alig1) << std::setfill('-') << "+"
 				  << std::setw(alig2) << std::setfill('-') << "+"
+				  << std::setw(alig3) << std::setfill('-') << "+"
 				  << "+" << std::endl << std::setfill(' ');
 
 		for(int i = 0; i < scores.size(); i++){
 			std::cout << "| " << std::setw(alig1-2) << std::left << std::string{argv[i+2]} 
-					  << "| " << std::setw(alig2-2)  << std::left << scores[i] << "|" << std::endl;
+					  << "| " << std::setw(alig2-2) << std::left << std::fixed << std::setprecision(3) << scores[i]
+					  << "| " << std::setw(alig3-2) << (i == best_choice ? " X" : "  ") << "|" << std::endl;
 			
 			std::cout << std::setw(alig1) << std::setfill('-') << "+"
-			<< std::setw(alig2) << std::setfill('-') << "+"
-			<< "+" << std::endl << std::setfill(' ');
+					  << std::setw(alig2) << std::setfill('-') << "+"
+					  << std::setw(alig3) << std::setfill('-') << "+"
+					  << "+" << std::endl << std::setfill(' ');
 		}
 
+		std::cout << "\nInput File: " << std::string{argv[argc-1]};
 		std::cout << "\nBest Match: " << std::string{argv[best_choice+2]}  << std::endl << std::endl;
 	}
 

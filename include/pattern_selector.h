@@ -13,7 +13,7 @@ class PatternSelector{
 private:
     std::string test_file_name;
     std::vector<std::string> input_file_names;
-    std::vector<uint> score;
+    std::vector<double> score;
 
     uint num_threads;
     uint num_blocks;
@@ -25,7 +25,7 @@ public:
 
     void selectMulti();
     void select();
-    std::vector<uint> getScores();
+    std::vector<double> getScores();
     void printProgress();
 };
 

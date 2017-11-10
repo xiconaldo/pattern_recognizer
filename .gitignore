@@ -36,5 +36,5 @@
 *.txt
 *.xdg
 *.pat
-compressor
+*.pgm
 recognizer

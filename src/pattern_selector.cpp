@@ -37,15 +37,16 @@ void PatternSelector::select(){
         
         PatternRecognizer p;
         FileSymbolBuffer test_file{test_file_name};
+        uint test_size = test_file.size();
         std::ifstream input{input_file_names[work_block], std::ofstream::binary};
 
         p.loadFromDisk(input);
         input.close();
-        score[work_block] = p.getScore(test_file);
+        score[work_block] = (double)test_size/p.getScore(test_file);
     }
 }
 
-std::vector<uint> PatternSelector::getScores(){
+std::vector<double> PatternSelector::getScores(){
     return score;
 }
 
