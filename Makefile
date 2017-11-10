@@ -39,28 +39,7 @@ clean:
 	rm -f build/* bin/*
 
 gen:
-	$(eval COMMAND_GEN := $(EXEC) -gen)
-	$(foreach person,$(NUM_40), \
-	  $(foreach k,0 $(NUM01_10), \
-	    $(foreach photo,$(NUM01_09), \
-	      $(eval COMMAND_GEN += img/orl_faces/s$(person)/$(photo).pgm) \
-	    ) \
-	    $(eval COMMAND_GEN += $(k)) \
-	    $(eval COMMAND_GEN += img/patterns/s$(person)/p$(k).pat) \
-	    $(COMMAND_GEN)${\n} \
-	    $(eval COMMAND_GEN := $(EXEC) -gen) \
-	  ) \
-	)
-
+	python3 test_gen.py
+	
 get:
-	$(eval COMMAND_GEN := $(EXEC) -get)
-	$(foreach test,$(NUM_40), \
-		$(foreach k,0 $(NUM01_10), \
-			$(foreach ref,$(NUM_40), \
-				$(eval COMMAND_GEN += img/patterns/s$(ref)/p$(k).pat) \
-			) \
-			$(eval COMMAND_GEN += img/orl_faces/s$(test)/10.pgm) \
-			$(COMMAND_GEN)${\n} \
-			$(eval COMMAND_GEN := $(EXEC) -get) \
-		) \
-	)
+	python3 test_get.py
