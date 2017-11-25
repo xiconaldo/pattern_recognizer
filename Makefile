@@ -27,9 +27,11 @@ NUM_40 := $(NUM01_10) $(NUM11_20) $(NUM21_30) $(NUM31_40)
 COMMAND_GEN := .
 
 $(EXEC): $(OBJ)
+	@mkdir -p $(EXECDIR)
 	$(CXX) $(CXXFLAGS) $(INC) $^ -o $(EXEC)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
+	@mkdir -p $(BUILDDIR)
 	$(CXX) $(CXXFLAGS) $(INC) $^ -c -o $@
 
 debug:
@@ -39,6 +41,8 @@ clean:
 	rm -f build/* bin/*
 
 gen:
+	@cp -r -d img/orl_faces img/patterns
+	@rm -f img/patterns/*/*.pgm
 	python3 test_gen.py
 	
 get:
