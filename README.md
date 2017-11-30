@@ -1,7 +1,6 @@
-# PPM Compressor
+# Pattern Recognizer
 
-An arithmetic compressor that uses a Pediction by Partial Matching (PPM) method to get symbol
-probabilities.
+An Pattern Recognizer that uses a Pediction by Partial Matching (PPM) method to get symbol probabilities.
 
 ## Using the project
 
@@ -9,23 +8,21 @@ To build the project, type on terminal:
 
 `$ make`
 
-To compress some file, type:
+To generate the PPM model to some file, type:
 
-`$ ./compressor -c input_file_name k tree_mode`
+`$ ./bin/recognizer -gen input_file_name1 input_file_name2 ... input_file_nameN k output_file_name`
 
-The first parameter "input_file_name" is self explanatory. "k" defines the maximum size of 
-the context to be used on the compression process, and is optional (with a default value of 2). 
-The generated output file will be labeled according to the input plus the ".xdg" extension.
-"tree_mode" indicate how to create the internal tree. It can assume two values: -list, to force 
-the use of lists or -map, to force the use of maps. In absence, the choice depends on the k 
-value.
+where:
 
-To decompress, type:
+- **input_file_name[1..N]** are the names of the N files used to generate a model;
+- **k** is the max context size in the model;
+- **output_file_name** is the name of the model file to be generated.
 
-`$ ./compressor -d input_file_name output_file_name`
+To check the best pattern for a file, type:
 
-The two parameters are self explanatory. The first one must end with ".xdg" as its extension 
-and label a file that must contain a proper XDG header. The second parameter is optional, and 
-defaults to the input file name minus the ".xdg" extension. "tree_mode" indicate how to create 
-the internal tree. It can assume two values: -list, to force the use of lists or -map, to force 
-the use of maps. In absence, the choice depends on the k value.
+`$ ./bin/recognizer -get input_file_name model_option1 ... model_optionN`
+
+where:
+
+- **input_file_name** is the name of the file to be tested;
+- **model_option[1..N]** represents the N models to be verified for pattern match.
