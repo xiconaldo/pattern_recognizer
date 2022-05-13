@@ -288,10 +288,7 @@ void Model::loadFromDisk(std::istream& input){
         tree = nullptr;
     }
 
-    if( k < 8)
-        tree = new TreeMap;
-    else
-        tree = new TreeList;
+    tree = new TreeList;
     
     tree->loadFromDisk(input);
 

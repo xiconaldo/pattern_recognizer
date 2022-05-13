@@ -22,9 +22,9 @@ for test in range(1, 41):
         end = time.time()
         output.write(";" + str(end-start).replace(".", ","));
 
-        for i in (exe+args):
-            print(i, end = ' ')
-        print("")
+        # for i in (exe+args):
+        #     print(i, end = ' ')
+        # print("")
         args = []
 
 output.close()

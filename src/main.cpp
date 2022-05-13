@@ -27,7 +27,7 @@ int main(int argc, char* argv[]){
 
 		k = std::stoi(std::string{argv[argc-2]});
 		output_file_name = std::string{argv[argc-1]};
-		PatternRecognizer p{k};
+		PatternRecognizer p{k, 2};
 
 		std::string input_file_name;
 		for(int i = 2; i < argc-2; i++){
@@ -66,6 +66,8 @@ int main(int argc, char* argv[]){
 		uint alig1 = 25;
 		uint alig2 = 9;
 		uint alig3 = 7;
+
+		std::cout << "\033[H\033[2J";
 
 		std::cout << "\n\nComparation Finished!\nResults:\n\n";
 

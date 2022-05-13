@@ -17,9 +17,10 @@ for person in range(1, 41):
         args.append(str(k))
         args.append("img/patterns/s" + str(person) + "/p" + str(k) + ".pat")
 
-        for i in (exe+args):
-            print(i, end = ' ')
-        print("")
+        # for i in (exe+args):
+        #     print(i, end = ' ')
+        # print("")
+        print("Person: " + str(person) + ", k: " + str(k))
 
         start = time.time()
         subprocess.call(exe + args)

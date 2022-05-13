@@ -43,6 +43,7 @@ clean:
 gen:
 	@cp -r -d img/orl_faces img/patterns
 	@rm -f img/patterns/*/*.pgm
+	@rm -f img/patterns/*/*.pat
 	python3 test_gen.py
 	
 get:
